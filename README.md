@@ -1,6 +1,6 @@
  ***🌍 AbroadEduIndia – Backend Server***
 
-AbroadEduIndia is a backend server built using *Node.js, **Express.js, and **MongoDB* to support a platform that helps students explore and filter colleges abroad. This project follows the *MVC architecture* and includes user authentication, college filtering, and Cloudinary-based logo management.
+AbroadEduIndia is a backend server built using **Node.js**, **Express.js**, and **MongoDB** to support a platform that helps students explore and filter colleges abroad. This project follows the **MVC architecture** and includes user authentication, college filtering, and Cloudinary-based logo management.
 
 ---
 
@@ -13,19 +13,19 @@ AbroadEduIndia is a backend server built using *Node.js, **Express.js, and **Mon
   - QS World Ranking
   - Program Offered
   - Study Level (UG/PG)
-- ☁ Logo management for 500+ colleges using *Cloudinary*
+- ☁ Logo management for colleges using *Cloudinary*
 - 🧠 Clean MVC structure for scalability
-- 👨‍💻 Admin-ready for future dashboard integration
 
 
 **🛠 Tech Stack**
 
-- *Node.js*
-- *Express.js*
+-Javascript
+- Node.js
+- Express.js
 - *MongoDB* with Mongoose
-- *JWT (JSON Web Tokens)*
-- *Cloudinary API* for image storage
-- *Dotenv* for environment config
+- JWT (JSON Web Tokens)
+- Cloudinary API for image storage
+- Dotenv for environment config
 
 
 **🧠 Future Plans**
