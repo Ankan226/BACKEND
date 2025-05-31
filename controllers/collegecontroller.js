@@ -1,5 +1,7 @@
 import College from "../models/college.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js"; // <-- Import the utility
+import slugify from "slugify";
+
 
 // Search/filter colleges
 export const getFilteredColleges = async (req, res) => {
@@ -22,17 +24,18 @@ export const getFilteredColleges = async (req, res) => {
     res.status(500).json({ message: "Error fetching colleges" });
   }
 };
-
 // Upload college logo
 export const uploadLogo = async (req, res) => {
   try {
+    const {country, collegeName} = req.body;
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
-    // Upload to Cloudinary and return the secure URL
-    const secureUrl = await uploadToCloudinary(req.file.buffer);
-    res.json({ message: "Logo uploaded", url: secureUrl });
-  } catch (err) {
+      const folder=country ? `university_logos/${country.toLowerCase()}` : 'university_logos';
+      const publicId = collegeName ? slugify(collegeName, { lower: true }) : undefined;
+      const secureUrl = await uploadToCloudinary(req.file.buffer, folder, publicId);
+    res.json({ message: "Logo uploaded successfully.", url: secureUrl });
+  }catch (err) {
     console.error("Error in uploadLogo:", err);
     res.status(500).json({ message: "Upload failed" });
   }

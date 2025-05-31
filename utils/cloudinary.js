@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv';
-import streamifier from 'streamifier'; // <-- Add this import
+import streamifier from 'streamifier';
 
 dotenv.config();
 
@@ -10,16 +10,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Utility function to upload buffer to Cloudinary
-export const uploadToCloudinary = (buffer) => {
+// Upload to Cloudinary with optional folder and public_id
+export const uploadToCloudinary = (buffer, folder = 'university_logos', public_id) => {
   return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: 'university_logos' },
-      (error, result) => {
-        if (error) return reject(error);
-        resolve(result.secure_url);
-      }
-    );
+    const options = { folder };
+    if (public_id) options.public_id = public_id;
+
+    const stream = cloudinary.uploader.upload_stream(options, (error, result) => {
+      if (error) return reject(error);
+      resolve(result.secure_url);
+    });
+
     streamifier.createReadStream(buffer).pipe(stream);
   });
 };
