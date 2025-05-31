@@ -17,7 +17,7 @@ AbroadEduIndia is a backend server built using *Node.js, **Express.js, and **Mon
 - 🧠 Clean MVC structure for scalability
 - 👨‍💻 Admin-ready for future dashboard integration
 
----
+
 **🛠 Tech Stack**
 
 - *Node.js*
