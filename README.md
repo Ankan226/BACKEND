@@ -37,9 +37,4 @@ AbroadEduIndia is a backend server built using **Node.js**, **Express.js**, and 
 
 **📄 License**
 
-This project is licensed under the [MIT License](LICENSE).
-
-
-**🌐 Live Frontend (Coming Soon..)**
-
-Stay tuned for the public release of AbroadEduIndia's frontend.
+This project is licensed under the [MIT License](LICENSE)
