@@ -2,9 +2,34 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  name: 
+  { type: String, 
+    required: [true,'Please add a name'],
+    trim: true,
+    maxlength: [20, 'Name cannot be more than 20 characters'],
+    minlength: [3, 'Name must be at least 3 characters'],
+  },
+
+  email:
+   { type: String, 
+    required: [true,'Please add an email'],
+    trim: true, 
+    unique: true,
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please add a valid email address'],
+    lowercase: true,
+    maxlength: [30, 'Email cannot be more than 30 characters'],
+    minlength: [10, 'Email must be at least 10 characters']
+  },
+
+  password: 
+  { type: String,
+     required:[true, 'Please add a password'],
+     trim: true,},
+  
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Hash password before save

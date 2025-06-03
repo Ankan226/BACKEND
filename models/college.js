@@ -8,7 +8,11 @@ university: String,
   country: String,
   program: [String],
   level: String,
-  logoUrl: String
+  logoUrl: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const college = mongoose.model("College", collegeSchema);
