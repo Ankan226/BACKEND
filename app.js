@@ -12,8 +12,8 @@ import connectDB from './config/db.js';
 dotenv.config();
 const app = express();
 
+app.use(errorHandler);
 app.use(helmet());
-
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
