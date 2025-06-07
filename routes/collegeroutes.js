@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import {getFilteredColleges, uploadLogo } from '../controllers/collegeController.js';
+import {getFilteredColleges, uploadLogo } from '../controllers/collegecontroller.js';
 
 const router = express.Router();
 
