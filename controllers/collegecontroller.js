@@ -1,22 +1,37 @@
 import College from "../models/college.js";
-import { uploadToCloudinary } from "../utils/cloudinary.js"; // <-- Import the utility
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 import slugify from "slugify";
 
-// Search/filter colleges
+// Search/filter colleges (all parameters required)
 export const getFilteredColleges = async (req, res) => {
   try {
-    const { acceptance_rate, Qs_rank, country, program, level } = req.query;
+    // Accept both lowercase and capitalized query keys
+    const country = req.query.country || req.query.Country;
+    const Qs_rank = req.query.Qs_rank || req.query.qs_rank;
+    const program = req.query.program || req.query.Program;
+    const level = req.query.level || req.query.Level;
+    const acceptance_rate = req.query.Acceptance_rate|| req.query.acceptance_rate;
+
+    // Require all parameters
+    if (!country || !Qs_rank || !program || !level || !acceptance_rate) {
+      return res.status(400).json({ message: "All parameters (country, Qs_rank, program, level, acceptance_rate) are required." });
+    }
 
     const filter = {};
+    filter.Qs_rank = { $lte: Number(Qs_rank) };
+    filter.country = { $regex: new RegExp(`\\b${country}\\b`, 'i') };
+    filter.program = { $regex: new RegExp(`\\b${program}\\b`, 'i') };
+    filter.level = { $regex: new RegExp(`\\b${level}\\b`, 'i') };
 
-    if (acceptance_rate) filter.acceptance_rate = { $lte: Number(acceptance_rate) };
-    if (Qs_rank) filter.Qs_rank = { $lte: Number(Qs_rank) };
-    if (country) filter.country = country;
-    if (program) filter.program = { $in: [program] };
-    if (level) filter.level = level;
+    // Fetch all matching colleges except acceptance_rate
+    let colleges = await College.find(filter).lean();
 
-    // Use .lean() to return plain JS objects
-    const colleges = await College.find(filter).lean();
+    // Now filter by acceptance_rate in JS
+    const rate =Number(String(acceptance_rate).replace(/[^0-9.]/g, ""));
+    colleges = colleges.filter(college => {
+      const dbRate =Number(String(college.acceptance_rate).replace(/[^0-9.]/g, ""));
+      return dbRate <= rate;
+    });
 
     // Convert arrays to comma-separated strings for display
     const formattedColleges = colleges.map(college => ({
