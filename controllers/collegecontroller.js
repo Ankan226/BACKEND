@@ -44,7 +44,7 @@ export const getFilteredColleges = async (req, res) => {
     res.json(formattedColleges);
   } catch (err) {
     console.error("Error in getFilteredColleges:", err);
-    res.status(500).json({ message: "Error fetching colleges" });
+    res.status(500).json({ message: "hvjgiibijbibiiib" });
   }
 };
 
